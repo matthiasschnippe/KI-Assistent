@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --f13-focus-ring: #083A6E;
+    --f13-focus-contrast: #FFFFFF;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-neutral-100 text-neutral-800 font-sans text-base antialiased;
+  }
+
+  /* Sichtbarer, kontraststarker Fokusindikator.
+     Doppelring: heller Innenring + dunkler Aussenring, damit der Fokus auf
+     hellen und auf dunklen Flaechen gleichermassen erkennbar bleibt. */
+  :where(a, button, input, select, textarea, summary, [tabindex], [contenteditable='true']):focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 2px var(--f13-focus-contrast),
+      0 0 0 5px var(--f13-focus-ring);
+    border-radius: 2px;
+  }
+
+  /* Ausgeblendetes bleibt ausgeblendet. Ohne diese Regel überstimmt eine
+     Layout-Utility wie "flex" das hidden-Attribut, das Radix auf inaktive
+     Registerinhalte setzt - die Inhalte wären dann alle gleichzeitig sichtbar. */
+  [hidden] {
+    display: none !important;
+  }
+
+  h1 {
+    @apply text-3xl font-bold text-neutral-900;
+  }
+  h2 {
+    @apply text-xl font-bold text-neutral-900;
+  }
+  h3 {
+    @apply text-lg font-semibold text-neutral-900;
+  }
+
+  ::placeholder {
+    @apply text-neutral-500 opacity-100;
+  }
+
+  /* Deaktivierte Zustaende behalten 4,5:1 Textkontrast. */
+  :disabled,
+  [aria-disabled='true'] {
+    @apply text-neutral-600;
+    cursor: not-allowed;
+  }
+}
+
+@layer components {
+  .f13-card {
+    @apply border border-neutral-200 bg-white;
+  }
+
+  .f13-link {
+    @apply text-primary-600 underline underline-offset-2 hover:text-primary-700 hover:decoration-2;
+  }
+
+  /* Rich-Text-Inhalte im Protokolleditor und in Artikeln */
+  .f13-richtext h2 {
+    @apply mt-6 mb-2 text-xl font-bold;
+  }
+  .f13-richtext h3 {
+    @apply mt-5 mb-2 text-lg font-semibold;
+  }
+  .f13-richtext p {
+    @apply mb-3 max-w-prose;
+  }
+  .f13-richtext ul {
+    @apply mb-3 ml-6 list-disc space-y-1;
+  }
+  .f13-richtext ol {
+    @apply mb-3 ml-6 list-decimal space-y-1;
+  }
+  .f13-richtext strong {
+    @apply font-bold;
+  }
+  .f13-richtext em {
+    @apply italic;
+  }
+  .f13-richtext table {
+    @apply mb-4 w-full border-collapse text-sm;
+  }
+  .f13-richtext th {
+    @apply border border-neutral-300 bg-neutral-100 px-3 py-2 text-left font-semibold;
+  }
+  .f13-richtext td {
+    @apply border border-neutral-300 px-3 py-2 align-top;
+  }
+}
+
+/* Bewegung nur, wenn gewuenscht */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Nur der Protokollinhalt geht in den Druck / die PDF-Ausgabe */
+@media print {
+  body {
+    background: #fff;
+  }
+  .f13-no-print {
+    display: none !important;
+  }
+  .f13-print-only {
+    display: block !important;
+  }
+  .f13-print-root {
+    position: static !important;
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+.f13-print-only {
+  display: none;
+}
+
+/* Schmale, unaufdringliche Scrollbalken mit ausreichendem Kontrast */
+.f13-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #9aa1a7 #eff1f2;
+}
