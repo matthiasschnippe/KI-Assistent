@@ -8,7 +8,7 @@ const GROUPS: { heading: string; rows: [string, string][] }[] = [
       ['Eingabetaste oder Leertaste', 'Schaltflächen und Verweise auslösen'],
       ['Esc', 'Dialoge und Menüs schließen, Fokus kehrt zum auslösenden Element zurück'],
       ['Pfeiltasten', 'In Menüs, Radiogruppen, Registern und Aufklapplisten bewegen'],
-      ['Alt + 1 bis Alt + 5', 'Direkt zu Chat, Meetingassistenz, Dokumente, Hilfe & Support, Tipps & Tricks'],
+      ['Alt + 1 bis Alt + 6', 'Direkt zu Chat, Meetingassistenz, Protokolle, Dokumente, Hilfe & Support, Tipps & Tricks'],
       ['Alt + 0', 'Diese Übersicht öffnen'],
       ['Alt + M', 'Linke Navigation ein- oder ausklappen'],
     ],

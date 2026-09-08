@@ -75,10 +75,15 @@ export function ChatHistory() {
           className={inputClass + ' min-h-[36px] py-1.5 text-sm'}
           aria-describedby="verlauf-treffer"
         />
-        <p id="verlauf-treffer" className="mt-1.5 text-xs text-neutral-700" role="status">
-          {needle
-            ? pluralize(filtered.length, 'Unterhaltung gefunden', 'Unterhaltungen gefunden')
-            : pluralize(conversations.length, 'Unterhaltung', 'Unterhaltungen')}
+        {/* Die Trefferzahl wird nur bei aktiver Suche gezeigt - und dann als
+            Statusmeldung, damit die Suche auch ohne Blick auf die Liste
+            nachvollziehbar bleibt. */}
+        <p
+          id="verlauf-treffer"
+          className={needle ? 'mt-1.5 text-xs text-neutral-700' : 'sr-only'}
+          role="status"
+        >
+          {needle ? pluralize(filtered.length, 'Treffer', 'Treffer') : ''}
         </p>
       </div>
 
@@ -112,9 +117,6 @@ export function ChatHistory() {
                       <span className="block truncate">{conv.title}</span>
                       <span className="block text-xs font-normal text-neutral-700">
                         {formatDateShort(conv.updatedAt)}
-                        <span aria-hidden="true"> · </span>
-                        <span className="sr-only">, </span>
-                        {pluralize(conv.messages.length, 'Nachricht', 'Nachrichten')}
                         {active && <span className="sr-only"> – aktuell geöffnet</span>}
                       </span>
                     </button>

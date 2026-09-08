@@ -68,6 +68,7 @@ export const MEETING_META: MeetingMeta = {
     'Zwei Vertretungen des Landesbetriebs IT als Gäste ohne Stimmrecht',
   ],
   audioSource: 'mikrofon',
+  microphone: 'Raummikrofon Sitzungsraum 3.14 (Konferenzsystem)',
   fileName: null,
   protocolType: 'ergebnis',
 };

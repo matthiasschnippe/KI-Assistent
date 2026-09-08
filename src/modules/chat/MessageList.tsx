@@ -65,13 +65,15 @@ function MessageItem({ message }: { message: ChatMessage }) {
             : 'mr-8 border-l-primary-600 border-y border-r border-neutral-200 bg-white xl:mr-20',
         )}
       >
+        {/* Die Beschriftung bleibt für Screenreader erhalten: visuell
+            unterscheiden Position, Rahmenfarbe und Symbol die Beiträge. */}
         <h3 id={headingId} className="mb-2 flex flex-wrap items-center gap-2 text-sm font-bold">
           {isUser ? (
             <User aria-hidden="true" className="h-4 w-4" />
           ) : (
             <Bot aria-hidden="true" className="h-4 w-4 text-primary-700" />
           )}
-          {isUser ? 'Ihre Nachricht' : 'Antwort von F13'}
+          <span className="sr-only">{isUser ? 'Ihre Nachricht' : 'Antwort von F13'}</span>
           <span className="font-normal text-neutral-700">{formatTime(message.createdAt)}</span>
           {!isUser && model && <Badge tone="neutral">{model.name}</Badge>}
         </h3>

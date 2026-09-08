@@ -7,10 +7,9 @@ export const MODELS: AiModel[] = [
     suitability: 'Gründliche Analyse, langsamer',
     detail:
       'Großes Modell für längere Vermerke, Rechtsauslegung, Argumentationsketten und mehrseitige Zusammenfassungen. Antwortet erkennbar langsamer.',
-    hosting: 'Betrieb im Rechenzentrum des Landesbetriebs für Informationstechnik',
+    hosting: 'Betrieb im Rechenzentrum des Landesbetriebs IT',
     hostingBadge: 'On-Premise',
-    dataNotice:
-      'Verarbeitung ausschließlich auf Servern im Landesverwaltungsnetz. Keine Weitergabe an Dritte, keine Nutzung der Eingaben zum Training.',
+    knowledgeCutoff: 'Wissensstand 03/2025',
     msPerChar: 11,
   },
   {
@@ -19,10 +18,9 @@ export const MODELS: AiModel[] = [
     suitability: 'Schnelle Entwürfe',
     detail:
       'Kompaktes Modell für kurze Texte: Antwortentwürfe, Umformulierungen, Stichwortlisten, Betreffzeilen. Antwortet spürbar schneller, bei komplexen Fragen weniger belastbar.',
-    hosting: 'Betrieb im Rechenzentrum des Landesbetriebs für Informationstechnik',
+    hosting: 'Betrieb im Rechenzentrum des Landesbetriebs IT',
     hostingBadge: 'On-Premise',
-    dataNotice:
-      'Verarbeitung ausschließlich auf Servern im Landesverwaltungsnetz. Keine Weitergabe an Dritte, keine Nutzung der Eingaben zum Training.',
+    knowledgeCutoff: 'Wissensstand 11/2025',
     msPerChar: 5,
   },
 ];

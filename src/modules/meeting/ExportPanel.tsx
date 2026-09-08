@@ -57,57 +57,43 @@ export function ExportPanel() {
       </p>
 
       <ul className="grid gap-4 md:grid-cols-3">
-        <li className="rounded border border-neutral-200 bg-white p-4">
-          <h3 className="mb-2 flex items-center gap-2">
-            <FileText aria-hidden="true" className="h-5 w-5 text-primary-700" />
-            Word (.docx)
-          </h3>
-          <p className="mb-4 text-sm text-neutral-700">
-            Standardweg für die Weiterbearbeitung in der Textverarbeitung. Überschriften, Listen
-            und Tabellen bleiben erhalten.
-          </p>
+        <li>
           <Button
             variant="primary"
+            className="w-full justify-center"
             onClick={() => {
               const name = exportDocx(meta, protocol);
               setStatus('Word-Datei erzeugt und heruntergeladen: ' + name);
             }}
           >
+            <FileText aria-hidden="true" className="h-5 w-5" />
             Als Word herunterladen
           </Button>
         </li>
 
-        <li className="rounded border border-neutral-200 bg-white p-4">
-          <h3 className="mb-2 flex items-center gap-2">
-            <Printer aria-hidden="true" className="h-5 w-5 text-primary-700" />
-            PDF
-          </h3>
-          <p className="mb-4 text-sm text-neutral-700">
-            Versandfähige Fassung. Die druckfertige Ansicht öffnet sich im Druckdialog; wählen Sie
-            dort „Als PDF speichern“.
-          </p>
+        <li>
           <Button
             variant="secondary"
+            className="w-full justify-center"
             onClick={() => {
               exportPdf(meta, protocol);
               setStatus('Druckfassung erzeugt. Der Druckdialog wurde geöffnet.');
             }}
           >
-            PDF-Fassung öffnen
+            <Printer aria-hidden="true" className="h-5 w-5" />
+            Als PDF öffnen
           </Button>
         </li>
 
-        <li className="rounded border border-neutral-200 bg-white p-4">
-          <h3 className="mb-2 flex items-center gap-2">
-            <Archive aria-hidden="true" className="h-5 w-5 text-primary-700" />
+        <li>
+          <Button
+            ref={eAkteButtonRef}
+            variant="secondary"
+            className="w-full justify-center"
+            onClick={() => setDialogOpen(true)}
+          >
+            <Archive aria-hidden="true" className="h-5 w-5" />
             In E-Akte übergeben
-          </h3>
-          <p className="mb-4 text-sm text-neutral-700">
-            Übergabe an das Dokumentenmanagement mit Ablageort und Aktenzeichen. Im Prototyp
-            simuliert – die Schnittstelle ist als Platzhalter angelegt.
-          </p>
-          <Button ref={eAkteButtonRef} variant="secondary" onClick={() => setDialogOpen(true)}>
-            Übergabe vorbereiten
           </Button>
         </li>
       </ul>

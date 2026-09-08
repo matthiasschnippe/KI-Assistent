@@ -69,13 +69,13 @@ export function ProtocolEditor({ onExport }: { onExport: () => void }) {
           gekennzeichnet; die KI-Fassung lässt sich je Abschnitt wiederherstellen.
         </p>
 
-        <fieldset className="mb-6 rounded border border-neutral-200 bg-white p-4">
+        <fieldset className="mb-4 rounded border border-neutral-200 bg-white px-4 py-3">
           <legend className="px-1 text-sm font-semibold">Protokolltyp</legend>
           <RadioGroup.Root
             value={protocol.type}
             onValueChange={(value) => switchType(value as ProtocolType)}
             aria-label="Protokolltyp wechseln"
-            className="grid gap-2 md:grid-cols-2"
+            className="flex flex-wrap gap-2"
           >
             {PROTOCOL_TYPES.map((type) => (
               <RadioCard
@@ -83,11 +83,10 @@ export function ProtocolEditor({ onExport }: { onExport: () => void }) {
                 value={type.id}
                 idPrefix={'nachb-protokoll-' + type.id}
                 label={type.name}
-                description={type.short}
+                className="w-auto items-center py-2"
               />
             ))}
           </RadioGroup.Root>
-          <p className="mt-3 text-sm text-neutral-700">{typeInfo.description}</p>
         </fieldset>
 
         <div className="mb-4 flex flex-wrap items-center gap-3">

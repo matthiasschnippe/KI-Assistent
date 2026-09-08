@@ -356,7 +356,7 @@ export const TIPS: TipArticle[] = [
           'Eingabetaste oder Leertaste: Schaltflächen und Verweise auslösen.',
           'Escape: offene Dialoge und Menüs schließen; der Fokus kehrt zur auslösenden Schaltfläche zurück.',
           'Pfeiltasten: innerhalb von Menüs, Radiogruppen, Registern und Aufklapplisten bewegen.',
-          'Alt+1 bis Alt+5: direkt zu Chat, Meetingassistenz, Dokumente, Hilfe & Support, Tipps & Tricks.',
+          'Alt+1 bis Alt+6: direkt zu Chat, Meetingassistenz, Protokolle, Dokumente, Hilfe & Support, Tipps & Tricks.',
           'Alt+0: Übersicht der Tastaturkürzel öffnen.',
         ],
       },

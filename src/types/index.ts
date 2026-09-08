@@ -7,11 +7,12 @@ export interface AiModel {
   name: string;
   /** Kurze Eignungsbeschreibung fuer die Auswahl */
   suitability: string;
-  /** Ausfuehrlichere Erlaeuterung im Auswahldialog */
+  /** Ausfuehrlichere Erlaeuterung, nur in der Verwaltung sichtbar */
   detail: string;
   hosting: string;
   hostingBadge: string;
-  dataNotice: string;
+  /** Wissensstand des Modells */
+  knowledgeCutoff: string;
   /** Millisekunden pro Zeichen im simulierten Streaming */
   msPerChar: number;
 }
@@ -147,6 +148,8 @@ export interface MeetingMeta {
   location: string;
   participants: string[];
   audioSource: AudioSource;
+  /** Ausgewaehltes Aufnahmegeraet, nur bei audioSource "mikrofon" relevant */
+  microphone: string;
   fileName: string | null;
   protocolType: ProtocolType;
 }

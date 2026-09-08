@@ -46,10 +46,10 @@ export function ModelPicker({
           </span>
         </Button>
         <span className="text-sm text-neutral-700">
-          {current.suitability}
-          <span aria-hidden="true"> · </span>
-          <span className="sr-only">, Hosting: </span>
           {current.hostingBadge}
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
+          {current.knowledgeCutoff}
         </span>
       </div>
 
@@ -59,7 +59,7 @@ export function ModelPicker({
           onValueChange={(next) => {
             const model = getModel(next as ModelId);
             onChange(next as ModelId);
-            setAnnouncement('Modell ausgewählt: ' + model.name + ', ' + model.suitability + '.');
+            setAnnouncement('Modell ausgewählt: ' + model.name + ', ' + model.hostingBadge + ', ' + model.knowledgeCutoff + '.');
           }}
           aria-label="Sprachmodell auswählen"
           className="grid gap-3 md:grid-cols-2"
@@ -78,18 +78,7 @@ export function ModelPicker({
                   </Badge>
                 </span>
               }
-              description={
-                <>
-                  <span className="block font-semibold text-neutral-800">
-                    {model.suitability}
-                  </span>
-                  <span className="mt-1 block">{model.detail}</span>
-                  <span className="mt-2 block">
-                    <span className="font-semibold">Datenverarbeitung: </span>
-                    {model.dataNotice}
-                  </span>
-                </>
-              }
+              description={model.knowledgeCutoff}
             />
           ))}
         </RadioGroup.Root>

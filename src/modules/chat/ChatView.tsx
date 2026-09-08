@@ -52,17 +52,18 @@ export function ChatView() {
       actions={
         <Button
           variant="ghost"
-          size="sm"
+          size="icon"
           aria-expanded={historyOpen}
           aria-controls="chatverlauf"
+          aria-label={historyOpen ? 'Chatverlauf ausblenden' : 'Chatverlauf einblenden'}
+          title={historyOpen ? 'Chatverlauf ausblenden' : 'Chatverlauf einblenden'}
           onClick={() => setHistoryOpen((v) => !v)}
         >
           {historyOpen ? (
-            <PanelLeftClose aria-hidden="true" className="h-4 w-4" />
+            <PanelLeftClose aria-hidden="true" className="h-5 w-5" />
           ) : (
-            <PanelLeftOpen aria-hidden="true" className="h-4 w-4" />
+            <PanelLeftOpen aria-hidden="true" className="h-5 w-5" />
           )}
-          {historyOpen ? 'Verlauf ausblenden' : 'Verlauf einblenden'}
         </Button>
       }
     >

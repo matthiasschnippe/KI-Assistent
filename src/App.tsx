@@ -7,6 +7,7 @@ import { DocumentsView } from './modules/documents/DocumentsView';
 import { FaqView } from './modules/faq/FaqView';
 import { BarrierefreiheitView, DatenschutzView } from './modules/legal/LegalPages';
 import { MeetingView } from './modules/meeting/MeetingView';
+import { SessionsView } from './modules/sessions/SessionsView';
 import { SettingsView } from './modules/settings/SettingsView';
 import { TipDetail } from './modules/tips/TipDetail';
 import { TipsView } from './modules/tips/TipsView';
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/chat" replace />} />
         <Route path="/chat" element={<ChatView />} />
         <Route path="/meeting" element={<MeetingView />} />
+        <Route path="/protokolle" element={<SessionsView />} />
         <Route path="/dokumente" element={<DocumentsView />} />
         <Route path="/hilfe" element={<FaqView />} />
         <Route path="/faq" element={<Navigate to="/hilfe" replace />} />

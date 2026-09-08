@@ -4,6 +4,7 @@ import {
   FolderOpen,
   Mic,
   MessagesSquare,
+  ScrollText,
   ShieldCheck,
 } from 'lucide-react';
 import type { Role } from '../types';
@@ -35,25 +36,32 @@ export const NAV_ITEMS: NavItem[] = [
     shortcut: '2',
   },
   {
+    to: '/protokolle',
+    label: 'Protokolle',
+    hint: 'Übersicht aller Transkripte und erzeugten Protokolle',
+    icon: ScrollText,
+    shortcut: '3',
+  },
+  {
     to: '/dokumente',
     label: 'Dokumente',
     hint: 'Ablage der hochgeladenen Dateien',
     icon: FolderOpen,
-    shortcut: '3',
+    shortcut: '4',
   },
   {
     to: '/hilfe',
     label: 'Hilfe & Support',
     hint: 'Häufige Fragen und Kontakt zum Support',
     icon: CircleHelp,
-    shortcut: '4',
+    shortcut: '5',
   },
   {
     to: '/tipps',
     label: 'Tipps & Tricks',
     hint: 'Anleitungen für die tägliche Arbeit',
     icon: BookOpenText,
-    shortcut: '5',
+    shortcut: '6',
   },
   {
     to: '/verwaltung',

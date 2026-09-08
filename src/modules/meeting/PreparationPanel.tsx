@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import { FileAudio, Mic, Monitor, Play } from 'lucide-react';
+import { FileAudio, Mic, Monitor, Play, Plus } from 'lucide-react';
 import { RadioCard } from '../../components/RadioCard';
-import { Button, Field, LiveRegion, StatusMessage, inputClass } from '../../components/ui';
-import { PROTOCOL_TYPES } from '../../data/models';
+import { Button, Field, LiveRegion, StatusMessage, inputClass, selectClass } from '../../components/ui';
+
 import { useAppStore } from '../../store/useAppStore';
-import type { AudioSource, ProtocolType } from '../../types';
+import type { AudioSource } from '../../types';
 
 const AUDIO_SOURCES: { id: AudioSource; label: string; hint: string; icon: typeof Mic }[] = [
   {
@@ -27,6 +27,93 @@ const AUDIO_SOURCES: { id: AudioSource; label: string; hint: string; icon: typeo
     icon: FileAudio,
   },
 ];
+
+export const MICROPHONES = [
+  'Raummikrofon Sitzungsraum 3.14 (Konferenzsystem)',
+  'Headset – Jabra Evolve 40 (USB)',
+  'Mikrofonarray – integriert (Notebook)',
+  'Webcam-Mikrofon – Logitech C925e',
+];
+
+/** Zahl der Eingabezeilen, die ohne Aufklappen sichtbar sind. */
+const VISIBLE_PARTICIPANT_ROWS = 5;
+
+function ParticipantFields({
+  participants,
+  onChange,
+}: {
+  participants: string[];
+  onChange: (next: string[]) => void;
+}) {
+  /* Es werden immer mindestens fünf Zeilen angeboten; weitere kommen einzeln
+     über die Schaltfläche darunter hinzu. */
+  const [rowCount, setRowCount] = useState(
+    Math.max(VISIBLE_PARTICIPANT_ROWS, participants.length),
+  );
+  const [status, setStatus] = useState('');
+  const lastFieldRef = useRef<HTMLInputElement>(null);
+  const focusLast = useRef(false);
+
+  useEffect(() => {
+    if (focusLast.current) {
+      lastFieldRef.current?.focus();
+      focusLast.current = false;
+    }
+  }, [rowCount]);
+
+  const rows = Array.from({ length: rowCount }, (_, index) => participants[index] ?? '');
+
+  function setRow(index: number, value: string) {
+    const next = [...rows];
+    next[index] = value;
+    onChange(next.filter((entry) => entry.trim() !== ''));
+  }
+
+  return (
+    <fieldset className="mb-6">
+      <legend className="mb-1 text-sm font-semibold text-neutral-800">Teilnehmende</legend>
+      <p className="mb-3 max-w-prose text-sm text-neutral-700">
+        Eine Person je Zeile, mit Funktion in Klammern. Die Liste erscheint im Protokollabschnitt
+        „Anwesende“.
+      </p>
+
+      <div className="max-w-xl space-y-2">
+        {rows.map((value, index) => (
+          <div key={index}>
+            <label htmlFor={'teilnehmende-' + index} className="sr-only">
+              {'Teilnehmende Person ' + (index + 1)}
+            </label>
+            <input
+              id={'teilnehmende-' + index}
+              ref={index === rowCount - 1 ? lastFieldRef : undefined}
+              type="text"
+              className={inputClass}
+              value={value}
+              placeholder={index === 0 ? 'z. B. Dr. Katrin Berger (Vorsitz)' : undefined}
+              onChange={(event) => setRow(index, event.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      <Button
+        variant="ghost"
+        size="sm"
+        className="mt-2"
+        onClick={() => {
+          focusLast.current = true;
+          setRowCount((count) => count + 1);
+          setStatus('Zeile ' + (rowCount + 1) + ' hinzugefügt.');
+        }}
+      >
+        <Plus aria-hidden="true" className="h-4 w-4" />
+        Weitere Teilnehmende hinzufügen
+      </Button>
+
+      <LiveRegion message={status} />
+    </fieldset>
+  );
+}
 
 export function PreparationPanel({ onStarted }: { onStarted: () => void }) {
   const meta = useAppStore((s) => s.meetingMeta);
@@ -133,50 +220,10 @@ export function PreparationPanel({ onStarted }: { onStarted: () => void }) {
           </Field>
         </div>
 
-        <Field
-          id="meeting-teilnehmende"
-          label="Teilnehmende"
-          description="Eine Person je Zeile, mit Funktion in Klammern. Die Liste erscheint im Abschnitt „Anwesende“."
-        >
-          {(props) => (
-            <textarea
-              {...props}
-              rows={6}
-              className={inputClass + ' min-h-[9rem]'}
-              value={meta.participants.join('\n')}
-              onChange={(event) =>
-                update({
-                  participants: event.target.value.split('\n').filter((line) => line.trim() !== ''),
-                })
-              }
-            />
-          )}
-        </Field>
-
-        <fieldset className="mb-6">
-          <legend className="mb-2 text-sm font-semibold text-neutral-800">
-            Protokolltyp vorauswählen
-          </legend>
-          <p className="mb-3 max-w-prose text-sm text-neutral-700">
-            Der Typ lässt sich nach der Erstellung wechseln; das Protokoll wird dann neu erzeugt.
-          </p>
-          <RadioGroup.Root
-            value={meta.protocolType}
-            onValueChange={(value) => update({ protocolType: value as ProtocolType })}
-            aria-label="Protokolltyp"
-            className="grid gap-3 md:grid-cols-2"
-          >
-            {PROTOCOL_TYPES.map((type) => (
-              <RadioCard
-                key={type.id}
-                value={type.id}
-                idPrefix={'vorb-protokoll-' + type.id}
-                label={type.name}
-                description={type.description}
-              />
-            ))}
-          </RadioGroup.Root>
-        </fieldset>
+        <ParticipantFields
+          participants={meta.participants}
+          onChange={(participants) => update({ participants })}
+        />
 
         <fieldset className="mb-6">
           <legend className="mb-2 text-sm font-semibold text-neutral-800">Audioquelle</legend>
@@ -204,6 +251,30 @@ export function PreparationPanel({ onStarted }: { onStarted: () => void }) {
               );
             })}
           </RadioGroup.Root>
+
+          {meta.audioSource === 'mikrofon' && (
+            <Field
+              id="meeting-mikrofon"
+              label="Mikrofon"
+              description="Erkannte Aufnahmegeräte an diesem Arbeitsplatz."
+              className="mt-4 max-w-md"
+            >
+              {(props) => (
+                <select
+                  {...props}
+                  className={selectClass}
+                  value={meta.microphone}
+                  onChange={(event) => update({ microphone: event.target.value })}
+                >
+                  {MICROPHONES.map((device) => (
+                    <option key={device} value={device}>
+                      {device}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </Field>
+          )}
 
           {meta.audioSource === 'datei' && (
             <Field
